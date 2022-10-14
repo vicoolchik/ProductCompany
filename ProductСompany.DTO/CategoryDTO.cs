@@ -13,7 +13,7 @@ namespace ProductСompany.DTO
         public override string ToString()
         {
 
-            return $"|{CategoryID,-3}|{CategoryName,-10}|";
+            return $"|{CategoryID,-5}|{CategoryName,-15}|";
         }
     }
 }

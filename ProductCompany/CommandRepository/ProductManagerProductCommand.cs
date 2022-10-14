@@ -3,70 +3,86 @@ using ProductCompany.DAL.Concrete;
 using ProductСompany.DTO;
 using System;
 
-
 namespace ProductCompany.CommandRepository
 {
-    class ProductManagerProductCommand
+    internal class ProductManagerProductCommand
     {
+
         static IMapper Mapper = SetupMapper();
 
         private static IMapper SetupMapper()
         {
             MapperConfiguration config = new MapperConfiguration(
-                cfg => cfg.AddMaps(typeof(CategoryDal).Assembly)
+                cfg => cfg.AddMaps(typeof(ProductDal).Assembly)
                 );
             return config.CreateMapper();
         }
 
-        internal void CreateCategoryCommand(string categoryName, string description)
+        internal void CreateProductCommand(string productName, int supplierID, int categoryID, decimal unitPrice, int unitsInStock, string description)
         {
-            var dal = new CategoryDal(Mapper);
+            var dal = new ProductDal(Mapper);
 
-            var category = new CategoryDTO
+            var product = new ProductDTO
             {
-                CategoryName = categoryName,
+                ProductName = productName,
+                SupplierID = supplierID,
+                CategoryID = categoryID,
+                UnitPrice = unitPrice,
+                UnitsInStock = unitsInStock,
+                UnitsOnOnder = 0,
+                Discontinued= true,
                 Description = description
             };
-            category = dal.CreateCategory(category);
-            Console.WriteLine($"New category ID : {category.CategoryID}");
+            product = dal.CreateProduct(product);
+            Console.WriteLine($"New product ID : {product.ProductID}");
         }
 
-        internal void SelectCategoryCommand()
+
+        internal void PrintAllProductsCommand(int сategoryId)
         {
-            PrintAllCategoriesCommand();
-        }
+            var dal = new ProductDal(Mapper);
+            
+            var productsList = dal.GetAllProductsByCategoryID(сategoryId);
 
-        internal void PrintAllCategoriesCommand()
-        {
-            var dal = new CategoryDal(Mapper);
-
-            var categoriesList = dal.GetAllCategories();
-
-            Console.WriteLine("\nCategories Name\n");
-            foreach (var category in categoriesList)
+            Console.WriteLine($"|{"ID",-3}|{"Product name",-30}|{"Company name",-20}|{"Price",-10}|\n");
+            if (productsList == null) Console.WriteLine("There are no products yet\n");
+            else
             {
-                Console.WriteLine(category.ToString());
+                foreach (var product in productsList)
+                {
+                    Console.WriteLine(product.ToString());
+                }
             }
         }
 
-        internal void EditCategoryCommand(int сategoryId, string categoryName, string description)
-        {
-            var dal = new CategoryDal(Mapper);
 
-            var category = new CategoryDTO
-            {
-                CategoryName = categoryName,
-                Description = description
-            };
-            category = dal.EditCategoryyByID(category, сategoryId);
-            Console.WriteLine($"Edited category ID : {category.CategoryID}");
+        internal void DeleteProductCommand(int productId)
+        {
+            var dal = new ProductDal(Mapper);
+
+            Console.WriteLine($"Edited category ID : {dal.DeleteProductByID(productId).ProductID}");
         }
 
-        internal void DeleteCategoryCommand(int сategoryId)
+        internal void ChangePriceCommand(int productId, decimal unitPrice)
         {
-            var dal = new CategoryDal(Mapper);
+            var dal = new ProductDal(Mapper);
+            var product = new ProductDTO
+            {
+                UnitPrice = unitPrice
+            };
+            product = dal.EditProductByID(product, productId);
+            Console.WriteLine($"Edited product ID : {product.ProductID}");
+        }
 
-            Console.WriteLine($"Edited category ID : {dal.DeleteCategoryByID(сategoryId).CategoryID}");
+        internal void BlockProductCommand(int productId)
+        {
+            var dal = new ProductDal(Mapper);
+            var product = new ProductDTO
+            {
+                Discontinued=false
+            };
+            product = dal.BlockProductByID(product, productId);
+            Console.WriteLine($"Edited product ID : {product.CategoryID}");
         }
     }
 }

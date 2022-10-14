@@ -1,11 +1,15 @@
 ﻿using ProductCompany;
+using ProductCompany.CommandRepository;
 using System;
 
 namespace ProductCompanyConsole
 {
     class ProductManagerMenu
     {
-		private ProductManagerCategoryCommand command = new ProductManagerCategoryCommand();
+		private ProductManagerCategoryCommand categoryCommand = new ProductManagerCategoryCommand();
+		private ProductManagerProductCommand productCommand = new ProductManagerProductCommand();
+		private ProductManagerSupplierCommand supplierCommand = new ProductManagerSupplierCommand();
+
 		public void runMenu()
 		{
 			showMenuOption();
@@ -51,10 +55,18 @@ namespace ProductCompanyConsole
         private void showProductsMenu()
         {
 			char userInput = ' ';
+			int? сategoryId = null;
+
+			while (!(сategoryId is int))
+			{
+				Console.Clear();
+				Console.WriteLine("Select the product category you want to work with.");
+				сategoryId = TrySelectCategoryByIDMenu();
+			}
 			while (userInput != '0')
 			{
 				Console.Clear();
-				command.SelectCategoryCommand();
+				productCommand.PrintAllProductsCommand((int)сategoryId);
 				Console.WriteLine();
 				Console.WriteLine("1) Add a product");
 				Console.WriteLine("2) Change the price");
@@ -65,22 +77,22 @@ namespace ProductCompanyConsole
 				Console.Write("Your choice : ");
 
 				userInput = Console.ReadKey().KeyChar;
-				selectProductsMenuOption(userInput);
+				selectProductsMenuOption(userInput, (int) сategoryId );
 			}
 		}
 
-        private void selectProductsMenuOption(char userInput)
+        private void selectProductsMenuOption(char userInput, int сategoryId)
         {
 			switch (userInput)
 			{
 				case '1':
-					//AddProductCommand();
+					AddProductMenu(сategoryId);
 					break;
 				case '2':
-					//ChangePriceCommand();
+					ChangeProductPriceMenu(сategoryId);
 					break;
 				case '3':
-					//BlockProductCommand();
+					BlockProductMenu(сategoryId);
 					break;
 				case '4':
 					//SearchCommand();
@@ -96,13 +108,68 @@ namespace ProductCompanyConsole
 			}
 		}
 
+        private void BlockProductMenu(int сategoryId)
+        {
+			int? productId = null;
+			while (!(productId is int)) productId = TrySelectProductByIDMenu(сategoryId);
+
+			productCommand.BlockProductCommand((int)productId);
+		}
+
+        private void ChangeProductPriceMenu(int сategoryId)
+        {
+			int? productId = null;
+			while (!(productId is int)) productId = TrySelectProductByIDMenu(сategoryId);
+
+			Console.Clear();
+			Console.WriteLine("Enter a new product price : ");
+			decimal productPrice;
+			decimal.TryParse(Console.ReadLine(), out productPrice);
+			productCommand.ChangePriceCommand((int)productId, productPrice);
+		}
+
+        private void AddProductMenu(int сategoryId)
+        {
+			Console.Clear();
+			Console.WriteLine("Enter the name of the product : ");
+			string productName = Console.ReadLine();
+			Console.WriteLine("Enter the price of the product : ");
+			decimal productPrice;
+			decimal.TryParse(Console.ReadLine(), out productPrice);
+			Console.WriteLine("Enter the quantity of the product  in stock  : ");
+			int unitsInStock;
+			int.TryParse(Console.ReadLine(), out unitsInStock);
+			Console.WriteLine("Write a short description of the product : ");
+			string description = Console.ReadLine();
+
+			int? supplierId = null;
+			while (!(supplierId is int)) supplierId = TrySelectSupplierIdByIDMenu();
+
+			productCommand.CreateProductCommand(productName, (int)supplierId, сategoryId, productPrice, unitsInStock, description);
+
+		}
+
+        private int? TrySelectSupplierIdByIDMenu()
+        {
+			Console.Clear();
+			supplierCommand.PrintAllSuppliersCommand();
+
+			int supplierId;
+
+			Console.Write("\nSelect the supplier Id : ");
+
+			bool success = int.TryParse(Console.ReadLine(), out supplierId);
+			return success ? (int?)supplierId : (int?)null;
+		}
+
         private void showCategoriesMenu()
         {
-			command.PrintAllCategoriesCommand();
 			char userInput = ' ';
 			while (userInput != '0')
 			{
 				Console.Clear();
+				categoryCommand.PrintAllCategoriesCommand();
+				Console.WriteLine();
 				Console.WriteLine("1) Create category");
 				Console.WriteLine("2) Edit category");
 				Console.WriteLine("3) Delete category");
@@ -137,10 +204,11 @@ namespace ProductCompanyConsole
 
         private void DeleteCategoryMenu()
         {
+			Console.Clear();
 			int? сategoryId = null;
 			while (!(сategoryId is int)) сategoryId = TrySelectCategoryByIDMenu();
 
-			command.DeleteCategoryCommand((int)сategoryId);
+			categoryCommand.DeleteCategoryCommand((int)сategoryId);
 		}
 
 		private void CreateCategoryMenu()
@@ -151,7 +219,7 @@ namespace ProductCompanyConsole
 			Console.WriteLine("Write a short description of the category : ");
 			string description = Console.ReadLine();
 
-			command.CreateCategoryCommand(categoryName, description);
+			categoryCommand.CreateCategoryCommand(categoryName, description);
 		}
 
 		private void EditCategoryMenu()
@@ -165,13 +233,13 @@ namespace ProductCompanyConsole
 			Console.WriteLine("Write a short description of the category : ");
 			string description = Console.ReadLine();
 
-			command.EditCategoryCommand((int)сategoryId, categoryName, description);
+			categoryCommand.EditCategoryCommand((int)сategoryId, categoryName, description);
 		}
 
 		private int? TrySelectCategoryByIDMenu()
         {
 			Console.Clear();
-			command.PrintAllCategoriesCommand();
+			categoryCommand.PrintAllCategoriesCommand();
 
 			int categoryId;
 
@@ -179,6 +247,18 @@ namespace ProductCompanyConsole
 
 			bool success = int.TryParse(Console.ReadLine(), out categoryId);
 			return success ? (int?)categoryId : (int?)null;
+		}
+		private int? TrySelectProductByIDMenu(int сategoryId)
+		{
+			Console.Clear();
+			productCommand.PrintAllProductsCommand(сategoryId);
+
+			int productId;
+
+			Console.Write("\nSelect the product id : ");
+
+			bool success = int.TryParse(Console.ReadLine(), out productId);
+			return success ? (int?)productId : (int?)null;
 		}
 
 

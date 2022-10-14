@@ -37,22 +37,12 @@ namespace ProductCompany.DAL.Concrete
             }
         }
 
-        public CategoryDTO GetCategoryByID(int id)
-        {
-            using (var entities = new Product_companyEntities())
-            {
-                var categoryID = entities.Categories.Select(x => x.CategoryID).ToList();
-                var category = entities.Categories.Where(x => categoryID.Contains(id)).ToList();
-                return _mapper.Map<CategoryDTO>(category[0]);
-            }
-        }
-
-        public CategoryDTO EditCategoryyByID(CategoryDTO category, int _id)
+        public CategoryDTO EditCategoryyByID(CategoryDTO category, int id)
         {
             using (var entites = new Product_companyEntities())
             {
                 var catedoryInDB = _mapper.Map<Category>(category);
-                catedoryInDB =entites.Categories.SingleOrDefault(x => x.CategoryID == _id);
+                catedoryInDB =entites.Categories.SingleOrDefault(x => x.CategoryID == id);
                 if (catedoryInDB != null)
                 {
                     catedoryInDB.RowUpdateTime = System.DateTime.Now;
@@ -69,9 +59,15 @@ namespace ProductCompany.DAL.Concrete
             using (var entites = new Product_companyEntities())
             {
                 var catedoryInDB = entites.Categories.SingleOrDefault(x => x.CategoryID == id);
-                //catedoryInDB = _mapper.Map<Category>(catedoryInDB);
                 if (catedoryInDB != null)
                 {
+                    var productsInDB = entites.Products.Where(x => x.CategoryID == id).ToList();
+                    foreach (var product in productsInDB)
+                    {
+                        product.RowUpdateTime = System.DateTime.Now;
+                        product.Discontinued = false;
+                        product.CategoryID = 0;
+                    }
                     entites.Categories.Remove(catedoryInDB);
                     entites.SaveChanges();
                 }

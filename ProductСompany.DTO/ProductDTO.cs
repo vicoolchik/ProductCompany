@@ -15,6 +15,11 @@ namespace ProductСompany.DTO
         public string Description { get; set; }
         public DateTime RowInsertTime { get; set; }
         public DateTime RowUpdateTime { get; set; }
+        public virtual SupplierDTO Supplier { get; set; }
 
+        public override string ToString()
+        {
+            return $"|{ProductID,-3}|{ProductName,-30}|{Supplier.CompanyName,-20}|{UnitPrice,-10}|";
+        }
     }
 }

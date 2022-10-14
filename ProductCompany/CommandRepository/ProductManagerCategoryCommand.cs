@@ -3,7 +3,7 @@ using ProductCompany.DAL.Concrete;
 using ProductСompany.DTO;
 using System;
 
-namespace ProductCompany
+namespace ProductCompany.CommandRepository
 {
     internal class ProductManagerCategoryCommand
     {
@@ -12,28 +12,24 @@ namespace ProductCompany
         private static IMapper SetupMapper()
         {
             MapperConfiguration config = new MapperConfiguration(
-                cfg=>cfg.AddMaps(typeof(ProductDal).Assembly)
+                cfg => cfg.AddMaps(typeof(CategoryDal).Assembly)
                 );
             return config.CreateMapper();
         }
 
-        internal void CreateProductCommand(string productName, string description)
+        internal void CreateCategoryCommand(string categoryName, string description)
         {
-            var dal = new ProductDal(Mapper);
+            var dal = new CategoryDal(Mapper);
 
-            var product = new ProductDTO
+            var category = new CategoryDTO
             {
-                ProductName = productName,
+                CategoryName = categoryName,
                 Description = description
             };
-            product = dal.CreateProduct(product);
-            Console.WriteLine($"New category ID : {product.CategoryID}");
+            category = dal.CreateCategory(category);
+            Console.WriteLine($"New category ID : {category.CategoryID}");
         }
 
-        internal void SelectCategoryCommand()
-        {
-            PrintAllCategoriesCommand();
-        }
 
         internal void PrintAllCategoriesCommand()
         {
@@ -41,7 +37,7 @@ namespace ProductCompany
 
             var categoriesList = dal.GetAllCategories();
 
-            Console.WriteLine("\nCategories Name\n");
+            Console.WriteLine($"\n|{"ID",-5}|{"Categories Name",-15}|\n");
             foreach (var category in categoriesList)
             {
                 Console.WriteLine(category.ToString());

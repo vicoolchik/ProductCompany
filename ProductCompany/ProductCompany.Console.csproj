@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CommandRepository\ProductManagerCategoryCommand.cs" />
     <Compile Include="CommandRepository\ProductManagerProductCommand.cs" />
+    <Compile Include="CommandRepository\ProductManagerSupplierCommand.cs" />
     <Compile Include="ProductManagerMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

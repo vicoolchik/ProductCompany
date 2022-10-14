@@ -19,18 +19,67 @@ namespace ProductCompany.DAL.Concrete
             using (var entites = new Product_companyEntities())
             {
                 var productInDB = _mapper.Map<Product>(product);
+                productInDB.RowInsertTime = System.DateTime.Now;
+                productInDB.RowUpdateTime = System.DateTime.Now;
                 entites.Products.Add(productInDB);
                 entites.SaveChanges();
                 return _mapper.Map<ProductDTO>(productInDB);
             }
         }
 
-        public List<ProductDTO> GetAllProducts()
+        public List<ProductDTO> GetAllProductsByCategoryID(int categoryID)
         {
             using (var entities = new Product_companyEntities())
             {
-                var products = entities.Products.ToList();
-                return _mapper.Map<List<ProductDTO>>(products);
+                var productInDB = entities.Products.Where(x => x.CategoryID == categoryID && x.Discontinued == true).ToList();
+                if (productInDB.Count == 0 || productInDB == null) return null;
+                return _mapper.Map<List<ProductDTO>>(productInDB);
+            }
+        }
+
+        public ProductDTO EditProductByID(ProductDTO product, int id)
+        {
+            using (var entites = new Product_companyEntities())
+            {
+                var productInDB = _mapper.Map<Product>(product);
+                productInDB = entites.Products.SingleOrDefault(x => x.ProductID == id);
+                if (productInDB != null)
+                {
+                    productInDB.RowUpdateTime = System.DateTime.Now;
+                    productInDB.UnitPrice = product.UnitPrice;
+                    entites.SaveChanges();
+                }
+                return _mapper.Map<ProductDTO>(productInDB);
+            }
+        }
+
+        public ProductDTO DeleteProductByID(int id)
+        {
+            using (var entites = new Product_companyEntities())
+            {
+                var productsInDB = entites.Products.SingleOrDefault(x => x.ProductID == id);
+                if (productsInDB != null)
+                {
+                    entites.Products.Remove(productsInDB);
+                    entites.SaveChanges();
+                }
+                return _mapper.Map<ProductDTO>(productsInDB);
+            }
+        }
+
+        public ProductDTO BlockProductByID(ProductDTO product, int id)
+        {
+            using (var entites = new Product_companyEntities())
+            {
+                var productInDB = _mapper.Map<Product>(product);
+                productInDB = entites.Products.SingleOrDefault(x => x.ProductID == id);
+                if (productInDB != null)
+                {
+                    productInDB.RowUpdateTime = System.DateTime.Now;
+                    productInDB.Discontinued = product.Discontinued;
+                    entites.SaveChanges();
+                }
+                return _mapper.Map<ProductDTO>(productInDB);
             }
         }
     }

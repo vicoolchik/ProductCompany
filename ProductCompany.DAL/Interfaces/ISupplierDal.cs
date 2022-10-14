@@ -1,12 +1,10 @@
-﻿using System;
+﻿using ProductСompany.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductCompany.DAL.Interfaces
 {
     public interface ISupplierDal
     {
+        List<SupplierDTO> GetAllSuppliers();
     }
 }

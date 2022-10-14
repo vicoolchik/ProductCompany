@@ -7,5 +7,7 @@ namespace ProductCompany.DAL.Interfaces
     {
         List<CategoryDTO> GetAllCategories();
         CategoryDTO CreateCategory(CategoryDTO category);
+        CategoryDTO DeleteCategoryByID(int id);
+        CategoryDTO EditCategoryyByID(CategoryDTO category, int id);
     }
 }

@@ -12,5 +12,10 @@ namespace ProductСompany.DTO
         public string Phone { get; set; }
         public DateTime RowInsertTime { get; set; }
         public DateTime RowUpdateTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"|{SupplierID,-3}|{CompanyName,-20}|";
+        }
     }
 }
