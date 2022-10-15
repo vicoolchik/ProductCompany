@@ -59,8 +59,9 @@ namespace ProductCompany.CommandRepository
         internal void DeleteProductCommand(int productId)
         {
             var dal = new ProductDal(Mapper);
+            var product = dal.DeleteProductByID(productId);
 
-            Console.WriteLine($"Edited category ID : {dal.DeleteProductByID(productId).ProductID}");
+            Console.WriteLine($"Edited category ID : {(product != null ? $"{product.ProductID}" : "null")}");
         }
 
         internal void ChangePriceCommand(int productId, decimal unitPrice)
@@ -71,18 +72,14 @@ namespace ProductCompany.CommandRepository
                 UnitPrice = unitPrice
             };
             product = dal.EditProductByID(product, productId);
-            Console.WriteLine($"Edited product ID : {product.ProductID}");
+            Console.WriteLine($"Edited product ID : {(product != null ? $"{product.ProductID}" : "null")}");
         }
 
         internal void BlockProductCommand(int productId)
         {
             var dal = new ProductDal(Mapper);
-            var product = new ProductDTO
-            {
-                Discontinued=false
-            };
-            product = dal.BlockProductByID(product, productId);
-            Console.WriteLine($"Edited product ID : {product.CategoryID}");
+            var product = dal.BlockProductByID(productId);
+            Console.WriteLine($"Edited product ID : {(product != null ? $"{product.ProductID}" : "null")}");
         }
     }
 }

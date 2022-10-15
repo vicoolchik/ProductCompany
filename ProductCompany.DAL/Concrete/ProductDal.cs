@@ -48,8 +48,9 @@ namespace ProductCompany.DAL.Concrete
                     productInDB.RowUpdateTime = System.DateTime.Now;
                     productInDB.UnitPrice = product.UnitPrice;
                     entites.SaveChanges();
+                    return _mapper.Map<ProductDTO>(productInDB);
                 }
-                return _mapper.Map<ProductDTO>(productInDB);
+                return null;
             }
         }
 
@@ -62,24 +63,25 @@ namespace ProductCompany.DAL.Concrete
                 {
                     entites.Products.Remove(productsInDB);
                     entites.SaveChanges();
+                    return _mapper.Map<ProductDTO>(productsInDB);
                 }
-                return _mapper.Map<ProductDTO>(productsInDB);
+                return null;
             }
         }
 
-        public ProductDTO BlockProductByID(ProductDTO product, int id)
+        public ProductDTO BlockProductByID( int id)
         {
             using (var entites = new Product_companyEntities())
             {
-                var productInDB = _mapper.Map<Product>(product);
-                productInDB = entites.Products.SingleOrDefault(x => x.ProductID == id);
+                var productInDB = entites.Products.SingleOrDefault(x => x.ProductID == id);
                 if (productInDB != null)
                 {
                     productInDB.RowUpdateTime = System.DateTime.Now;
-                    productInDB.Discontinued = product.Discontinued;
+                    productInDB.Discontinued = false;
                     entites.SaveChanges();
+                    return _mapper.Map<ProductDTO>(productInDB);
                 }
-                return _mapper.Map<ProductDTO>(productInDB);
+                return null;
             }
         }
     }

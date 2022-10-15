@@ -54,14 +54,15 @@ namespace ProductCompany.CommandRepository
                 Description = description
             };
             category = dal.EditCategoryyByID(category, сategoryId);
-            Console.WriteLine($"Edited category ID : {category.CategoryID}");
+            Console.WriteLine($"Edited category ID : {(category!=null ? $"{ category.CategoryID}" :"null")}");
         }
 
         internal void DeleteCategoryCommand(int сategoryId)
         {
             var dal = new CategoryDal(Mapper);
+            var category = dal.DeleteCategoryByID(сategoryId);
 
-            Console.WriteLine($"Edited category ID : {dal.DeleteCategoryByID(сategoryId).CategoryID}");
+            Console.WriteLine($"Edited category ID : {(category!=null ? $"{category.CategoryID}" :"null")}");
         }
     }
 }

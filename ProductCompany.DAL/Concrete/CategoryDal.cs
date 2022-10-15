@@ -49,8 +49,9 @@ namespace ProductCompany.DAL.Concrete
                     catedoryInDB.CategoryName= category.CategoryName;
                     catedoryInDB.Description= category.Description;
                     entites.SaveChanges();
+                    return _mapper.Map<CategoryDTO>(catedoryInDB);
                 }
-                return _mapper.Map<CategoryDTO>(catedoryInDB);
+                return null;
             }
         }
 
@@ -70,8 +71,9 @@ namespace ProductCompany.DAL.Concrete
                     }
                     entites.Categories.Remove(catedoryInDB);
                     entites.SaveChanges();
+                    return _mapper.Map<CategoryDTO>(catedoryInDB);
                 }
-                return _mapper.Map<CategoryDTO>(catedoryInDB);
+                return null;
             }
         }
 

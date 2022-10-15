@@ -18,12 +18,11 @@ namespace ProductCompany.CommandRepository
                 cfg => cfg.AddMaps(typeof(SupplierDal).Assembly)
                 );
             return config.CreateMapper();
-        }
-
+        }  
+        
         internal void PrintAllSuppliersCommand()
         {
             var dal = new SupplierDal(Mapper);
-
             var suppliersList = dal.GetAllSuppliers();
 
             Console.WriteLine("\nSuppliers Name\n");
