@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProductDalTests.cs" />
     <Compile Include="CategoryDalTests.cs" />
     <Compile Include="CategoryDalTestWithTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

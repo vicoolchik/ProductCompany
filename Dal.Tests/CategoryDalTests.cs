@@ -3,13 +3,10 @@ using NUnit.Framework;
 using ProductCompany.DAL.Concrete;
 using System;
 using System.Linq;
-using System.EnterpriseServices;
-using System.Runtime.InteropServices;
 using System.Configuration;
 using System.Data.SqlClient;
 using ProductСompany.DTO;
 using System.Data;
-using System.Collections.Generic;
 
 namespace Dal.Tests
 {
@@ -32,6 +29,7 @@ namespace Dal.Tests
             string connStr = ConfigurationManager.ConnectionStrings["Product Company"].ConnectionString;
             _connection = new SqlConnection(connStr);
             _connection.Open();
+
             InsertTestCategory();
         }
 
@@ -48,10 +46,6 @@ namespace Dal.Tests
             {
                 comm.CommandText = "delete Categories where CategoryName = @Category1";
                 comm.Parameters.Add(new SqlParameter("Category1", _testCategory));
-
-                //comm.CommandText = "delete Categories where CategoryName = @NewCategory";
-                //comm.Parameters.Add("@NewCategory", SqlDbType.NVarChar);
-
 
                 comm.ExecuteNonQuery();
             }
@@ -102,20 +96,28 @@ namespace Dal.Tests
         public void DeleteCategoryTest()
         {
             var dal = new CategoryDal(Mapper);
-            Assert.IsTrue(dal.DeleteCategoryByID(newCtegory.CategoryID).CategoryID == newCtegory.CategoryID);
+
+            var categoriesList = dal.GetAllCategories();
+            var id= categoriesList.SingleOrDefault(x => x.CategoryName == "NewCategory").CategoryID;
+
+            Assert.IsTrue(dal.DeleteCategoryByID(id).CategoryID == id);
         }
 
         [Test]
         public void EditCategoryTest()
         {
-            newCtegory = new CategoryDTO
+            CategoryDTO newCtegory = new CategoryDTO
             {
                 CategoryName = "NewCategory2"
             };
+
             var dal = new CategoryDal(Mapper);
+
             var categoriesList = dal.GetAllCategories();
-            int id = categoriesList.SingleOrDefault(x => x.CategoryName == "NewCategory").CategoryID;
-            Assert.IsTrue(dal.EditCategoryyByID(newCtegory, id).CategoryName==newCtegory.CategoryName);
+            int id = categoriesList.SingleOrDefault(x => x.CategoryName == _testCategory).CategoryID;
+
+            _testCategory = newCtegory.CategoryName;
+            Assert.IsTrue(dal.EditCategoryyByID(newCtegory, id).CategoryName== _testCategory);
         }
 
     }
