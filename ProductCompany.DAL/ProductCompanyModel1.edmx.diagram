@@ -10,6 +10,13 @@
         <EntityTypeShape EntityType="ProductCompanyModel.Supplier" Width="1.5" PointX="5.875" PointY="1.625" IsExpanded="true" />
         <AssociationConnector Association="ProductCompanyModel.FK_Product_CategoryID" ManuallyRouted="false" />
         <AssociationConnector Association="ProductCompanyModel.FK_Product_SupplierID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProductCompanyModel.Role" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="ProductCompanyModel.User" Width="1.5" PointX="6.125" PointY="5.875" />
+        <EntityTypeShape EntityType="ProductCompanyModel.UserRole" Width="1.5" PointX="3" PointY="5.875" />
+        <AssociationConnector Association="ProductCompanyModel.FK__UserRoles__RoleI__7B5B524B" />
+        <AssociationConnector Association="ProductCompanyModel.FK__UserRoles__UserI__7A672E12" />
+        <AssociationConnector Association="ProductCompanyModel.FK__UserRoles__RoleIID" />
+        <AssociationConnector Association="ProductCompanyModel.FK__UserRoles__UserIID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

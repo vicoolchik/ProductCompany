@@ -84,5 +84,15 @@ namespace ProductCompany.DAL.Concrete
                 return null;
             }
         }
+
+        public List<ProductDTO> GetAllProducts()
+        {
+            using (var entities = new Product_companyEntities())
+            {
+                var productInDB = entities.Products.Where(x => x.Discontinued == true).ToList();
+                if (productInDB.Count == 0 || productInDB == null) return null;
+                return _mapper.Map<List<ProductDTO>>(productInDB);
+            }
+        }
     }
 }

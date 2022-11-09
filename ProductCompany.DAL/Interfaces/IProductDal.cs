@@ -9,5 +9,6 @@ namespace ProductCompany.DAL.Interfaces
         ProductDTO CreateProduct(ProductDTO product);
         ProductDTO EditProductByID(ProductDTO product, int id);
         ProductDTO DeleteProductByID(int id);
+        List<ProductDTO> GetAllProducts();
     }
 }
