@@ -10,5 +10,7 @@ namespace ProductCompany.DAL.Interfaces
         UserDTO GetUserByLogin(string username);
         UserDTO GetUserById(int id);
         List<UserDTO> GetUsers();
+
+        bool IsManager(UserDTO user);
     }
 }

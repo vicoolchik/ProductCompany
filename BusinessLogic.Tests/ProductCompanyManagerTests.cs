@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using ProductCompany.BusinessLogic.Concrete;
+using ProductCompany.BusinessLogic.Interfaces;
 using ProductCompany.DAL.Interfaces;
 using ProductСompany.DTO;
 
@@ -12,6 +13,7 @@ namespace BusinessLogic.Tests
         private Mock<IProductDal> productDal;
         private Mock<ICategoryDal> categoryDal;
         private Mock<ISupplierDal> supplierDal;
+        private Mock<IAuthManager> authManager;
         private ProductCompanyManager manager;
 
         [SetUp]
@@ -21,7 +23,7 @@ namespace BusinessLogic.Tests
             categoryDal = new Mock<ICategoryDal>(MockBehavior.Strict);
             supplierDal = new Mock<ISupplierDal>(MockBehavior.Strict);
 
-            manager = new ProductCompanyManager(categoryDal.Object, productDal.Object, supplierDal.Object);
+            manager = new ProductCompanyManager(categoryDal.Object, productDal.Object, supplierDal.Object, authManager.Object);
         }
 
         [Test]

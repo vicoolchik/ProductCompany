@@ -19,5 +19,12 @@ namespace ProductCompany.BusinessLogic.Interfaces
         ProductDTO UpdateProductByID(ProductDTO product, int id);
         ProductDTO DeleteProductByID(int id);
         List<ProductDTO> GetListOfProducts();
+        ProductDTO BlockProductByID(int id);
+
+
+        bool EditAllowed(UserDTO user);
+
+        List<SupplierDTO> GetAllSuppliers();
+
     }
 }

@@ -10,5 +10,6 @@ namespace ProductCompany.DAL.Interfaces
         ProductDTO EditProductByID(ProductDTO product, int id);
         ProductDTO DeleteProductByID(int id);
         List<ProductDTO> GetAllProducts();
+        ProductDTO BlockProductByID(int id);
     }
 }

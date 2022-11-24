@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace ProductCompany.DAL.Concrete
@@ -48,7 +49,7 @@ namespace ProductCompany.DAL.Concrete
             using (var entities = new Product_companyEntities())
             {
                 return mapper.Map<UserDTO>(entities.Users
-                    /*.Include(db => db.)*/
+                    .Include(db => db.UserRoles.Select(c => c.Role))
                     .SingleOrDefault(u => u.UserID == id)
                     );
             }
@@ -74,7 +75,7 @@ namespace ProductCompany.DAL.Concrete
             using (var entities = new Product_companyEntities())
             {
                 return mapper.Map<UserDTO>(entities.Users
-                    /*.Include(db => db.UserRoles.Select(c => c.Role))*/
+                    .Include(db => db.UserRoles.Select(c => c.Role))
                     .SingleOrDefault(u => u.Login == username)
                     );
             }
@@ -85,9 +86,22 @@ namespace ProductCompany.DAL.Concrete
             using (var entities = new Product_companyEntities())
             {
                 return mapper.Map<List<UserDTO>>(entities.Users
-                    /*.Include(db => db.UserRoles.Select(c => c.Role))*/
+                    .Include(db => db.UserRoles.Select(c => c.Role))
                     );
             }
+        }
+
+        public bool IsManager(UserDTO user)
+        {
+                var roles = user.Roles;
+                foreach(RoleDTO r in roles)
+                {
+                    if (r.Name == "manager")
+                    {
+                        return true;
+                    }
+                }
+                return false;         
         }
     }
 }

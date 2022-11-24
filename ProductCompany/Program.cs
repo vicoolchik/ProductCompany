@@ -21,9 +21,9 @@ namespace ProductCompanyConsole
             ProductManagerMenu menu = new ProductManagerMenu();
             //menu.runMenu();
             UserDal n = new UserDal(Mapper);
-            n.CreateUser("user1", "qaz123", "user1@gmail.com");
+            //n.CreateUser("user2", "user2", "user2@gmail.com");
             List<UserDTO> l= n.GetUsers();
-            n.GetUserByLogin("user1");
+            n.GetUserByLogin("user2");
             n.GetUserById(1);
 
         }

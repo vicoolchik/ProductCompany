@@ -82,30 +82,30 @@ namespace ProductCompany.WF
             // lUserMame
             // 
             this.lUserMame.AutoSize = true;
-            this.lUserMame.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lUserMame.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lUserMame.Location = new System.Drawing.Point(26, 74);
             this.lUserMame.Name = "lUserMame";
-            this.lUserMame.Size = new System.Drawing.Size(110, 25);
+            this.lUserMame.Size = new System.Drawing.Size(106, 26);
             this.lUserMame.TabIndex = 4;
             this.lUserMame.Text = "Username";
             // 
             // lPassword
             // 
             this.lPassword.AutoSize = true;
-            this.lPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lPassword.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lPassword.Location = new System.Drawing.Point(26, 135);
             this.lPassword.Name = "lPassword";
-            this.lPassword.Size = new System.Drawing.Size(106, 25);
+            this.lPassword.Size = new System.Drawing.Size(101, 26);
             this.lPassword.TabIndex = 5;
             this.lPassword.Text = "Password";
             // 
             // lWelcome
             // 
             this.lWelcome.AutoSize = true;
-            this.lWelcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lWelcome.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lWelcome.Location = new System.Drawing.Point(12, 9);
             this.lWelcome.Name = "lWelcome";
-            this.lWelcome.Size = new System.Drawing.Size(407, 29);
+            this.lWelcome.Size = new System.Drawing.Size(407, 31);
             this.lWelcome.TabIndex = 6;
             this.lWelcome.Text = "Welcome to the Product Company";
             // 
@@ -114,7 +114,7 @@ namespace ProductCompany.WF
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
-            this.ClientSize = new System.Drawing.Size(430, 261);
+            this.ClientSize = new System.Drawing.Size(458, 257);
             this.Controls.Add(this.lWelcome);
             this.Controls.Add(this.lPassword);
             this.Controls.Add(this.lUserMame);

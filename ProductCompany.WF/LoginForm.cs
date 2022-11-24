@@ -1,12 +1,6 @@
 ﻿using ProductCompany.BusinessLogic.Interfaces;
+using ProductСompany.DTO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProductCompany.WF
@@ -14,6 +8,7 @@ namespace ProductCompany.WF
     public partial class LoginForm : Form
     {
         protected readonly IAuthManager manager;
+        public static UserDTO currentUser;
 
         public LoginForm(IAuthManager manager)
         {
@@ -32,6 +27,8 @@ namespace ProductCompany.WF
             {
                 DialogResult = DialogResult.OK;
                 this.Close();
+                
+                currentUser = manager.GetUserByLogin(textUserName.Text);
             }
             else
             {

@@ -15,7 +15,7 @@ namespace ProductСompany.DTO
 
         public override string ToString()
         {
-            return $"|{SupplierID,-3}|{CompanyName,-20}|";
+            return $"{CompanyName}";
         }
     }
 }

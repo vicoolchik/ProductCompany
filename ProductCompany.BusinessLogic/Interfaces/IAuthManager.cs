@@ -14,5 +14,6 @@ namespace ProductCompany.BusinessLogic.Interfaces
         UserDTO GetUserByLogin(string username);
         UserDTO GetUserById(int id);
         List<UserDTO> GetUsers();
+        bool IsManager(UserDTO user);
     }
 }

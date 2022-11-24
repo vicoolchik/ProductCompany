@@ -38,7 +38,6 @@ namespace ProductCompany.WF
             {
                 Application.Exit();
             }
-            //Application.Run(new UserForm());
         }
 
         private static void ConfigureUnity()

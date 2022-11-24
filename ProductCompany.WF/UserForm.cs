@@ -3,11 +3,6 @@ using ProductСompany.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProductCompany.WF
@@ -33,6 +28,28 @@ namespace ProductCompany.WF
 
             navUserProducts.BindingSource = bsUserProducts;
             dqvUserProducts.DataSource = bsUserProducts;
+        }
+
+        private void btSingout_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void btEdit_Click(object sender, EventArgs e)
+        {
+            if (manager.EditAllowed(LoginForm.currentUser))
+            {
+                this.Hide();
+                ManagerForm mf = new ManagerForm(manager);
+               if(mf.ShowDialog() == DialogResult.OK)
+                {
+                    this.Show();
+                }
+            }
+            else
+            {
+                MessageBox.Show("You do not have permission to edit");
+            }
         }
     }
 }

@@ -36,5 +36,11 @@ namespace ProductCompany.BusinessLogic.Concrete
         {
             return userDal.Login(username, password);
         }
+
+        public bool IsManager(UserDTO user)
+        {
+            return userDal.IsManager(user);
+        }
+
     }
 }
